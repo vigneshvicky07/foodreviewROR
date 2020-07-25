@@ -9,9 +9,20 @@ module Api
             puts (request)
             data_sent = ActiveSupport::JSON.decode(request.body.read)
             # data_sent.delete_if {|key, value| value.blank?  }
-            if data_sent["category"].blank? || data_sent["theame"].blank? || data_sent["name"].blank? || data_sent["category"].blank?
-                render json:{ data:"invalid params"}, status: 404
-               
+            # if data_sent["category"].blank? || data_sent["theame"].blank? || data_sent["name"].blank? || data_sent["category"].blank?
+                # render json:{ data:"invalid params"}, status: 404
+          if data_sent["theame"].blank?
+            if
+                data_sent["timings"].each do |j|
+                    if !j.blank?
+                        data_sent[j] = true
+                    
+                       
+                    end
+                end
+                data_sent.delete("timings")
+                  render json:data_sent
+
             else
             # puts(createparams[:name])
                 @value = Food.new(data_sent)
