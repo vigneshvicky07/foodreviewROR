@@ -10,5 +10,13 @@ module Api
             render json: @refer
             
         end
+
+        def getSpecificReview
+            data_sent = ActiveSupport::JSON.decode(request.body.read)
+           review =  Food.find_by(name: data_sent["foodname"]).includes(:review)
+           review =  review.as_json(include:{reviews:{}})
+        
+            render json: review
+        end
     end
 end
